@@ -1,0 +1,147 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap');
+
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Noto Sans", sans-serif;
+}
+body{
+    height:100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: whitesmoke;
+}
+.Inicio {
+    display: flex;
+    align-items: center;
+    justify-content:center ;
+    color:  rgb(26, 32, 49);
+    font-size: large;
+
+}
+.logo img{ 
+    margin-right: 0px;
+    width: 125px;
+    height:125px;
+    float: left;
+    color:  rgb(26, 32, 49);
+}
+.conteiner { 
+    max-width: auto ;
+    display: auto ;
+    background-color: whitesmoke;
+    align-items: center;
+    justify-content: center;
+    border-radius: 15px ;
+    padding: 4px;
+    margin: 10px auto;
+}
+.centro nav a{
+    color: rgb(26, 32, 49);
+    display: auto ;
+    border-radius: 15px;
+    background-color: rgb(160, 172, 177);
+    text-decoration: none;
+    width: auto;
+    padding: 4px 50px; 
+    font-size: flex;
+}
+@media (max-width: 768px) {
+    .conteiner{
+        padding: auto;
+        font-size: large;
+    }
+    .centro nav a{
+        padding: 4px 10px;
+    }
+}
+
+section{
+    padding: 4px;
+    width: 80%;
+    height: 8000px;
+    display: flex;
+    justify-content: 25px;
+    align-items: flex-start;
+    flex-direction: column;
+    background-color: rgb(26, 32, 49);
+    border-radius: 20px;
+    box-shadow: 15px 15px 15px rgb(39, 94, 148);
+}
+
+button{
+
+    border-radius: 10px;
+    padding: 0px 10px ;
+}
+footer{
+    color: whitesmoke;
+    text-align: center;
+    font-style: italic;
+}
+.iniciarViagem{
+    margin: 15px;
+
+}
+
+.iniciarViagem h1 {
+    color: whitesmoke;
+    margin-bottom: 55px;
+    
+}
+.dentro{
+    margin-bottom: 15px ;
+    display: flex;
+    align-items: center;
+    height: 25px;
+    width: 200px;
+    position: relative;
+    
+}
+.dentro input {
+    position: absolute;
+    border-radius: 25px;
+    height: 100%;
+    width: 100%;
+    background-color: whitesmoke;
+    border: none;
+    font-size: 11px;
+    padding-left: 40px; 
+    font-weight: bold;
+    color:  rgb(26, 32, 49);
+}
+input::placeholder{
+   color:  rgb(26, 32, 49);
+   opacity: 1;
+}
+ .dentro i {
+    position: absolute;
+    left: 5px;
+    font-size: 13px;
+    color: rgb(26, 32, 49); ;
+    margin-left: 10px;
+ }
+ .dentro select {
+    position: absolute;
+    border-radius: 25px;
+    height: 100%;
+    width: 100%;
+    background-color: whitesmoke;
+    border: none;
+    font-size: 11px;
+    padding-left: 40px; 
+    font-weight: bold;
+    color:  rgb(26, 32, 49);
+}
+.dentro i {
+    position: absolute;
+    left: 5px;
+    font-size: 13px;
+    color: rgb(26, 32, 49); ;
+    margin-left: 10px;
+ }
