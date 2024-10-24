@@ -1,0 +1,189 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap');
+
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Noto Sans", sans-serif;
+}
+body{
+    height:100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(255, 255, 255, 1);
+}
+.passo{
+    display: none;
+}
+.passo.ativo {
+    display: block;
+}
+.Inicio {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding: 10px 20px;
+    background-color: #2c3e50;
+    margin-bottom: 2rem;
+    
+}
+
+.logo img {
+    max-width: 150px;
+    height: auto;
+    margin-top: 1rem;
+}
+
+
+
+
+button{
+    border-radius: 20px;
+    padding: 1px 10px ;
+    font-weight: bold;
+    font-size: 12px;
+}
+.inputViagem{
+    margin-bottom: 15px ;
+    display: flex;
+    align-items: center;
+    height: 1.5rem;
+    width: 80% ;
+    position: relative;
+}
+.inputViagem input, .inputViagem select {
+    position: absolute;
+    border-radius: 25px;
+    height: 100%;
+    width: 100%;
+    background-color: whitesmoke;
+    border: none;
+    font-size: 11px;
+    padding-left: 40px; 
+    font-weight: bold;
+    color:  rgb(26, 32, 49);
+    border: 2px solid black;
+}
+input::placeholder{
+    color:  rgb(26, 32, 49);
+    opacity: 1;
+}
+.inputViagem i {
+    position: absolute;
+    left: 5px;
+    font-size: 13px;
+    color: rgb(26, 32, 49); ;
+    margin-left: 10px;
+}
+
+section {
+    height: 100%;
+    padding: 4px;
+    width: 80%;
+    min-height: 500px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-color: #2c3e50;
+    border-radius: 20px;
+    box-shadow: 15px 15px 15px rgb(39, 94, 148);
+}
+
+#navBar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    width: auto; /* Deixe o nav ocupar apenas o espaço necessário */
+}
+
+/* Ajustes para os links */
+#navBar .linkPasso {
+    display: inline-block;
+    padding: 5px 20px;
+    margin: 0 10px;
+    font-size: 16px;
+    color: #fff;
+    background-color: #007bff;
+    border: 1px solid #007bff;
+    border-radius: 4px;
+    text-align: center;
+    text-decoration: none;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+
+/* Estilo para link quando estiver com o estado ativo (clicado) */
+#navBar .linkPasso.ativo {
+    background-color: #28a745;
+    border-color: #28a745;
+}
+
+/* Estilo para o hover (passar o mouse por cima) */
+#navBar .linkPasso:hover {
+    background-color: #0056b3;
+    border-color: #0056b3;
+    cursor: pointer;
+}
+
+/* Adiciona uma sombra suave aos links */
+#navBar .linkPasso {
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Estilos adicionais para os links para maior acessibilidade e interação */
+#navBar .linkPasso:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(38, 143, 255, 0.8);
+}
+/* Estilos para o footer */
+footer {
+    background-color: #2c3e50;
+    color: #fff;
+    padding: 20px 0;
+    text-align: center;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+    margin-top: 40px;
+}
+
+.footer-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.footer-content p {
+    margin: 10px 0;
+}
+
+.footer-content a {
+    color: #3498db;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.footer-content a:hover {
+    text-decoration: underline;
+}
+
+/* Responsividade do footer */
+@media (max-width: 768px) {
+    footer {
+        padding: 15px 0;
+    }
+
+    .footer-content {
+        flex-direction: column;
+        text-align: center;
+    }
+}
+

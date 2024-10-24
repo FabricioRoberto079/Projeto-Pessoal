@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Driver Log</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+        integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+
+<body>
+
+    <div class="Inicio">
+        <p class="logo">
+            <img src="imagens/DriverLog.png" alt="logo">
+        </p>
+    </div>
+
+
+    
+    <section>
+        <nav id="navBar" style="display: none;">
+            <a class="linkPasso" data-passo="2">Viagem</a>
+            <a class="linkPasso" data-passo="3">Despesas</a>
+            <a class="linkPasso" data-passo="4">Recebimento</a>
+            <a class="linkPasso" data-passo="5">despesas gerais</a>
+        </nav>
+
+        <form>
+
+            <div class="passo" data-passo="1">
+                <h1>Uma ferramenta pensada em facilitar a vida do chofé</h1>
+                <div class="inputViagem">
+                    <input type="text" id="nome" name="nome" placeholder="Nome Completo">
+                    <i class="fa-solid fa-user"></i>
+                </div>
+
+                <div class="inputViagem">
+                    <input type="text" id="placa" name="placa" placeholder="Placa do Veiculo">
+                    <i class="fa-solid fa-window-maximize"></i>
+                </div>
+
+                <div class="inputViagem">
+                    <input type="text" id="modelo" name="modelo" placeholder="Modelo do Veiculo">
+                    <i class="fa-solid fa-truck"></i>
+                </div>
+
+                <div class="inputViagem">
+                    <input type="number" id="valor" name="valor" placeholder="Valor Inicial para Viagem">
+                    <i class="fa-solid fa-hand-holding-dollar"></i>
+                </div>
+
+                <button id="iniciarViagem" type="button">Inicar Viagem</button>
+
+            </div>
+
+            <!--Etapa 2 Recebimento-->
+
+            <div class="passo" data-passo="4">
+                <h1>Recebimento</h1>
+
+                <div class="inputViagem">
+                    <input type="text" name="recebimentoFrete" placeholder="Frete">
+                    <i class="fa-solid fa-clipboard"></i>
+                </div>
+                <div class="inputViagem">
+                    <input type="text" name="recebimentoValor" placeholder="Valor">
+                    <i class="fa-solid fa-hand-holding-dollar"></i>
+                </div>
+                <div class="inputViagem">
+                    <input type="text" name="recebimentoData" placeholder="Data">
+                    <i class="fa-solid fa-calendar"></i>
+                </div>
+                <div class="inputViagem">
+                    <select nome="Recebimento">
+                        <option>Forma de Pagamento</option>
+                    </select>
+                    <i class="fa-solid fa-money-bills"></i>
+                </div>
+
+
+            </div>
+
+
+            <!--Etapa 3 Despesas-->
+            <div class="passo" data-passo="3">
+
+                <h1>Abastecimento</h1>
+
+                <div class="inputViagem">
+                    <input type="text" name="abastecimentoPosto" placeholder="Posto">
+                    <i class="fa-solid fa-clipboard"></i>
+                </div>
+                <div class="inputViagem">
+                    <input type="text" name="abasteciemntoData" placeholder="Data">
+                    <i class="fa-solid fa-calendar"></i>
+                </div>
+                <div class="inputViagem">
+                    <input type="text" name="abastecimentoLitros" placeholder="Litros">
+                    <i class="fa-solid fa-gauge"></i>
+                </div>
+                <div class="inputViagem">
+                    <input type="text" name="abasteciemntoValor" placeholder="Valor">
+                    <i class="fa-solid fa-hand-holding-dollar"></i>
+                </div>
+                <div class="inputViagem">
+                    <select nome="abasteciemntoPagamento">
+                        <option>Forma de Pagamento</option>
+                    </select>
+                    <i class="fa-solid fa-money-bills"></i>
+                </div>
+                <div class="inputViagem">
+                    <input type="text" name="abastecimentoKmInicial" placeholder="Km inicial">
+                    <i class="fa-solid fa-gauge"></i>
+                </div>
+                <div class="inputViagem">
+                    <input type="text" name="abastecimentoKmFinal" placeholder="Km final">
+                    <i class="fa-solid fa-gauge"></i>
+                </div>
+
+            </div>
+
+            <div class="passo" data-passo="5">
+                <h1>Despesas Gerias</h1>
+
+                <div class="inputViagem">
+                    <input type="text" name="despesasProduto" placeholder="Produto">
+                    <i class="fa-solid fa-clipboard"></i>
+                </div>
+                <div class="inputViagem">
+                    <input type="text" name="despesasValor" placeholder="Valor">
+                    <i class="fa-solid fa-hand-holding-dollar"></i>
+                </div>
+                <div class="inputViagem">
+                    <input type="text" name="despesasData" placeholder="Data">
+                    <i class="fa-solid fa-calendar"></i>
+                </div>
+                <div class="inputViagem">
+                    <select nome="pagamento">
+                        <option>Forma de Pagamento</option>
+                    </select>
+                    <i class="fa-solid fa-money-bills"></i>
+                </div>
+
+
+
+
+            </div>
+
+
+
+
+            <div class="passo" data-passo="2">
+                <h1>Fretes</h1>
+                <div class="inputViagem">
+                    <input type="text" name="viagemFrete" placeholder="Frete">
+                    <i class="fa-solid fa-user"></i>
+                </div>
+                <div class="inputViagem">
+                    <input type="text" name="viagemOrigem" placeholder="Origem">
+                    <i class="fa-solid fa-location-dot"></i>
+                </div>
+                <div class="inputViagem">
+                    <input type="text" name="viagemDestino" placeholder="Destino">
+                    <i class="fa-solid fa-location-dot"></i>
+                </div>
+                <div class="inputViagem">
+                    <input type="text" name="viagemDataInicio" placeholder="Data de inicio">
+                    <i class="fa-solid fa-calendar"></i>
+                </div>
+                <div class="inputViagem">
+                    <input type="text" name="viagemDataFinal" placeholder="Data de chegada">
+                    <i class="fa-solid fa-calendar"></i>
+                </div>
+
+            </div>
+
+
+
+            <div id="controleViagem" style="display: none;">
+                <button id="adicionar" type="button">Adicionar</button>
+                <button id="finalizarViagem" type="button">Finalizar Viagem</button>
+            </div>
+
+        </form>
+    </section>
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2024 Driver Log - Desenvolvedor: Fabrício Roberto</p>
+            <p><a href="" target="_blank">Portfólio</a></p>
+            <p><a href="" target="_blank">Contribuir</a></p>
+        </div>
+    </footer>
+
+
+    <script src="serve.js"></script>
+
+</body>
+
+</html>
