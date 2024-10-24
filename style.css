@@ -1,27 +1,44 @@
-
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap');
-
-
-*{
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
     font-family: "Noto Sans", sans-serif;
 }
-body{
-    height:100vh;
+
+body {
+    height: 100vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     background-color: rgba(255, 255, 255, 1);
+    padding: 0 10px;
 }
-.passo{
+section {
+    width: 100%;
+    max-width: 800px;
+    padding: 20px;
+    min-height: 590px; 
+    height: auto; /* Altura automática para crescer com o conteúdo */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-color: #001E2D;
+    border-radius: 20px;
+    box-shadow: 15px 15px 15px rgb(39, 94, 148);
+    color: #0079E6;
+}
+
+
+.passo {
     display: none;
 }
+
 .passo.ativo {
     display: block;
 }
+
 .Inicio {
     width: 100%;
     display: flex;
@@ -29,7 +46,7 @@ body{
     padding: 10px 20px;
     background-color: #2c3e50;
     margin-bottom: 2rem;
-    
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
 }
 
 .logo img {
@@ -38,61 +55,79 @@ body{
     margin-top: 1rem;
 }
 
-
-
-
-button{
+button {
     border-radius: 20px;
-    padding: 1px 10px ;
+    padding: 8px 20px;
     font-weight: bold;
-    font-size: 12px;
+    font-size: 14px;
+    background-color: #3498db;
+    color: #fff;
+    border: none;
+    transition: background-color 0.3s ease;
 }
-.inputViagem{
-    margin-bottom: 15px ;
+
+button:hover {
+    background-color: #2980b9;
+    cursor: pointer;
+}
+
+.inputViagem {
+    margin-bottom: 20px;
     display: flex;
     align-items: center;
-    height: 1.5rem;
-    width: 80% ;
+    height: 2.5rem; /* Aumentado */
+    width: 100%;
+    min-width: 280px;
     position: relative;
 }
-.inputViagem input, .inputViagem select {
+
+.inputViagem input, 
+.inputViagem select {
     position: absolute;
     border-radius: 25px;
     height: 100%;
     width: 100%;
-    background-color: whitesmoke;
+    background-color: #f2f2f2;
     border: none;
-    font-size: 11px;
-    padding-left: 40px; 
+    font-size: 16px; /* Aumentado */
+    padding-left: 50px;  /* Espaço para o ícone */
     font-weight: bold;
-    color:  rgb(26, 32, 49);
-    border: 2px solid black;
-}
-input::placeholder{
-    color:  rgb(26, 32, 49);
-    opacity: 1;
-}
-.inputViagem i {
-    position: absolute;
-    left: 5px;
-    font-size: 13px;
-    color: rgb(26, 32, 49); ;
-    margin-left: 10px;
+    color: rgb(26, 32, 49);
+    border: 2px solid transparent;  /* Bordas invisíveis inicialmente */
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra suave */
 }
 
-section {
-    height: 100%;
-    padding: 4px;
-    width: 80%;
-    min-height: 500px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    background-color: #2c3e50;
-    border-radius: 20px;
-    box-shadow: 15px 15px 15px rgb(39, 94, 148);
+.inputViagem input:focus,
+.inputViagem select:focus {
+    border-color: #3498db; /* Cor de destaque ao focar */
+    box-shadow: 0 0 8px rgba(52, 152, 219, 0.6); /* Efeito de foco */
+    outline: none;
+    background-color: #fff;
 }
+
+.inputViagem i {
+    position: absolute;
+    left: 15px; /* Ajustado para o ícone ficar mais espaçado */
+    font-size: 18px; /* Aumentado */
+    color: #0079E6; /* Cor harmonizada com o design */
+}
+
+/* Ajuste para melhorar a aparência dos placeholders */
+input::placeholder, 
+select::placeholder {
+    color: #b0b0b0;
+    font-weight: normal;
+    opacity: 1;
+}
+
+input:hover, 
+select:hover {
+    border-color: #2980b9; /* Efeito ao passar o mouse */
+    background-color: #fafafa;
+}
+
+
 
 #navBar {
     display: flex;
@@ -100,56 +135,49 @@ section {
     align-items: center;
     margin-top: 20px;
     margin-bottom: 20px;
-    width: auto; /* Deixe o nav ocupar apenas o espaço necessário */
+    flex-wrap: wrap;
+    width: auto;
 }
 
-/* Ajustes para os links */
 #navBar .linkPasso {
     display: inline-block;
-    padding: 5px 20px;
-    margin: 0 10px;
+    padding: 10px 20px;
+    margin: 5px;
     font-size: 16px;
     color: #fff;
-    background-color: #007bff;
-    border: 1px solid #007bff;
+    background-color: #0079E6;
+    border: 1px solid #0079E6;
     border-radius: 4px;
     text-align: center;
     text-decoration: none;
     transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-
-/* Estilo para link quando estiver com o estado ativo (clicado) */
 #navBar .linkPasso.ativo {
     background-color: #28a745;
     border-color: #28a745;
 }
 
-/* Estilo para o hover (passar o mouse por cima) */
 #navBar .linkPasso:hover {
     background-color: #0056b3;
     border-color: #0056b3;
     cursor: pointer;
 }
 
-/* Adiciona uma sombra suave aos links */
 #navBar .linkPasso {
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-/* Estilos adicionais para os links para maior acessibilidade e interação */
 #navBar .linkPasso:focus {
     outline: none;
     box-shadow: 0 0 0 2px rgba(38, 143, 255, 0.8);
 }
-/* Estilos para o footer */
+
 footer {
     background-color: #2c3e50;
     color: #fff;
     padding: 20px 0;
     text-align: center;
-    position: relative;
-    bottom: 0;
     width: 100%;
     margin-top: 40px;
 }
@@ -175,8 +203,20 @@ footer {
     text-decoration: underline;
 }
 
-/* Responsividade do footer */
 @media (max-width: 768px) {
+    .inputViagem {
+        width: 90%;
+    }
+
+    section {
+        width: 90%;
+        padding: 15px;
+    }
+
+    button {
+        font-size: 12px;
+    }
+
     footer {
         padding: 15px 0;
     }
@@ -186,4 +226,3 @@ footer {
         text-align: center;
     }
 }
-
