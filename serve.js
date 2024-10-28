@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 document.addEventListener('DOMContentLoaded', function () {
     const links = document.querySelectorAll('.linkPasso')
     const passos = document.querySelectorAll('.passo')
@@ -220,3 +221,16 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 })
 
+=======
+const route = (event) => {
+    event = event || window.event
+    event.preventDefoult()
+    window.history.pushState({}, "", event.target.href)
+}
+
+
+const 
+
+
+window.route = route;
+>>>>>>> 0d62766a07370c8ef493f3353120cf6f1915ee9a
