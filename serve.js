@@ -178,46 +178,52 @@ document.addEventListener('DOMContentLoaded', function () {
         window.location.href = 'dadosSalvos.html'
     })
     finalizarViagemBtn.addEventListener('click', function () {
+        const dadosPasso1 = JSON.parse(localStorage.getItem('dadosPasso1')) || [];
         const dadosPasso2 = JSON.parse(localStorage.getItem('dadosPasso2')) || [];
-    const dadosPasso3 = JSON.parse(localStorage.getItem('dadosPasso3')) || [];
-    const dadosPasso4 = JSON.parse(localStorage.getItem('dadosPasso4')) || [];
-    const dadosPasso5 = JSON.parse(localStorage.getItem('dadosPasso5')) || [];
+        const dadosPasso3 = JSON.parse(localStorage.getItem('dadosPasso3')) || [];
+        const dadosPasso4 = JSON.parse(localStorage.getItem('dadosPasso4')) || [];
+        const dadosPasso5 = JSON.parse(localStorage.getItem('dadosPasso5')) || [];
+    
+        if (dadosPasso2.length === 0) {
+            console.error("Não há dados salvos para o passo 2.");
+            return; // Evita erro se não houver dados
+        }
+    
+        // Cálculo do total de recebimentos, abastecimentos e despesas
+        const totalRecebimento = dadosPasso4.reduce((total, item) => total + parseFloat(item["Valor-do-Recebimento"] || 0), 0);
+        const totalAbastecimento = dadosPasso3.reduce((total, item) => total + parseFloat(item["Valor-do-Abastecimento"] || 0), 0);
+        const totalDespesas = dadosPasso5.reduce((total, item) => total + parseFloat(item["Valor-da-Despesa"] || 0), 0);
+    
+        // Cálculo total de dias passados em viagens
+        let totalDiasPassados = 0;
+        dadosPasso2.forEach(item => {
+            const dataInicial = new Date(item["Data-Inicio-do-Frete"].split('/').reverse().join('-') || "");
+            const dataFinal = new Date(item["Data-Final-do-Frete"].split('/').reverse().join('-') || "");
+            
+            const diffTime = Math.abs(dataFinal - dataInicial);
+            const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24)); 
 
-    if (dadosPasso2.length === 0) {
-        console.error("Não há dados salvos para o passo 1.");
-        return; // Para evitar erro se não houver dados
-    }
-
-    // Cálculo do total de recebimentos, abastecimentos e despesas
-    const totalRecebimento = dadosPasso4.reduce((total, item) => total + parseFloat(item["Valor-do-Recebimento"] || 0), 0);
-    const totalAbastecimento = dadosPasso3.reduce((total, item) => total + parseFloat(item["Valor-do-Abastecimento"] || 0), 0);
-    const totalDespesas = dadosPasso5.reduce((total, item) => total + parseFloat(item["Valor-da-Despesa"] || 0), 0);
-
-    // Obtendo as datas inicial e final do passo 1
-    const dataInicial = new Date(dadosPasso2[0]["Data-Inicio-do-Frete"] || "");
-    const dataFinal = new Date(dadosPasso2[0]["Data-Final-do-Frete"] || "");
-
-    // Calculando a diferença em dias
-    const diffTime = Math.abs(dataFinal - dataInicial);
-    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-
-    // Calculando o total de diárias
-    const valorDiaria = parseFloat(dadosPasso2[0]["Valor-da-Diária"] || 0);
-    const totalDiarias = valorDiaria * diffDays;
-
-    // Calculando o valor final
-    const valorFinal = totalRecebimento - (totalAbastecimento + totalDespesas + totalDiarias);
-    const resumoViagem = {
-        totalRecebimento,
-        totalAbastecimento,
-        totalDespesas,
-        totalDiarias,
-        valorFinal
-    };
-
-    // Salvando os dados no localStorage e redirecionando
-    localStorage.setItem('resumoViagem', JSON.stringify(resumoViagem));
-    window.location.href = 'resumo.html';
+            totalDiasPassados += diffDays; 
+        });
+    
+        // Calculando o total de diárias
+        const valorDiaria = parseFloat(dadosPasso1[0]["Valor-da-Diária"] || 0);
+        const totalDiarias = valorDiaria * totalDiasPassados; // Total de diárias para todas as viagens
+    
+        // Calculando o valor final
+        const valorFinal = totalRecebimento - (totalAbastecimento + totalDespesas + totalDiarias);
+        const resumoViagem = {
+            totalRecebimento,
+            totalAbastecimento,
+            totalDespesas,
+            totalDiarias,
+            valorFinal,
+            totalDiasPassados // Adicionando total de dias ao resumo
+        };
+    
+        // Salvando os dados no localStorage e redirecionando
+        localStorage.setItem('resumoViagem', JSON.stringify(resumoViagem))
+        window.location.href = 'resumo.html'
     });
 })
 
