@@ -84,6 +84,7 @@ document.addEventListener('DOMContentLoaded', function () {
         mostrarPasso("1");
     } else {
         mostrarPasso("2");
+        passoAtual = "2"
     }
 
 
