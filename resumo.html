@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resumo da Viagem</title>
+    <link rel="icon" href="imagens/DriverLog.png" type="image/png">
+    <link rel="stylesheet" href="css/resumo.css">
+</head>
+
+<body>
+    <header>
+        <img src="imagens/DriverLog.png" alt="Logo do Projeto">
+        <h1>Resumo da Viagem</h1>
+    </header>
+
+    <!-- Div para exibir os dados do resumo -->
+    <main>
+        <section id="dadosResumo" class="dados-resumo">
+            <!-- Os dados serão inseridos aqui dinamicamente pelo JavaScript -->
+        </section>
+
+        <!-- Botão para finalizar a viagem -->
+        <div class="finalizar-secao">
+            <button id="voltar" type="button" onclick="window.history.back();">Voltar</button>
+            <button id="finalizarViagem" type="button">Finalizar Viagem</button>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <p class="dev-info">&copy; 2024 Driver Log - Desenvolvedor: Fabrício Roberto</p>
+
+            <!-- Link de Contribuição para Pix -->
+            <div class="contribuir-section">
+                <a href="Contribuição.html" target="_blank" class="contribuir-link">Contribuir com Pix</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <script src="js/resumo.js"></script>
+</body>
+
+</html>

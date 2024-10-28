@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contribuir com Pix</title>
+    <link rel="shortcut icon" href="imagens/DriverLog.png">
+    <link rel="stylesheet" href="css/contribuicao.css">
+</head>
+
+<body>
+    <div class="contribuicao-container">
+        <h1>Contribua com Pix</h1>
+        <p class="mensagem">Sua contribuição ajuda a manter o projeto atualizado e com novas funcionalidades!</p>
+        <p class="pix-key" id="pix-key">
+            00020126580014br.gov.bcb.pix013600d12f7e-4dec-4ed7-8528-a74a67065c8b5204000053039865802BR5925FABRICIO
+            ROBERTO OLIVEIRA6009Sao Paulo62070503***6304559E</p>
+        <button class="copy-button" onclick="copyPixKey()">Copiar Chave Pix</button>
+        <div class="qrcode">
+            <img src="imagens/Qr Code.jpg" alt="QR Code Pix">
+        </div>
+    </div>
+
+    <script>
+        function copyPixKey() {
+            const pixKey = document.getElementById('pix-key').innerText;
+            navigator.clipboard.writeText(pixKey)
+                .then(() => {
+                    alert('Chave Pix copiada para a área de transferência!');
+                })
+                .catch(err => {
+                    console.error('Erro ao copiar a chave Pix: ', err);
+                });
+        }
+    </script>
+</body>
+
+</html>
