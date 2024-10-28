@@ -1,0 +1,164 @@
+:root {
+    --azul-claro: #3a7bd5; /* Cor azul principal */
+    --azul-escuro: #2b4f7c; /* Cor do cabeçalho */
+    --cinza-claro: #f5f5f5;
+    --branco: #ffffff;
+}
+
+/* Estilos globais */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: var(--cinza-claro);
+    min-height: 100vh;
+}
+
+/* Cabeçalho */
+header {
+    width: 100%;
+    text-align: center;
+    padding: 1em;
+    background-color: var(--azul-escuro);
+    color: var(--branco);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+header img {
+    max-width: 120px; /* Tamanho da logo */
+    height: auto;
+    margin-bottom: 10px;
+}
+
+h1 {
+    font-size: 2.5em;
+    margin: 0;
+}
+
+/* Seção principal */
+main {
+    flex: 1;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1em;
+}
+
+.dados-resumo {
+    width: 90%;
+    max-width: 800px;
+    margin: 1em 0;
+    background-color: var(--branco);
+    padding: 1.5em;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.dados-passo {
+    margin-bottom: 1.5em;
+}
+
+.dados-passo h3 {
+    font-size: 1.5em;
+    margin-bottom: 0.5em;
+    color: var(--azul-claro);
+}
+
+.dados-passo ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.dados-passo li {
+    padding: 0.5em 0;
+    border-bottom: 1px solid #ddd;
+    color: #555;
+}
+
+/* Botão de Finalizar Viagem */
+.finalizar-secao {
+    margin-top: 2em;
+    margin-bottom: 3em;
+    text-align: center;
+}
+
+button#finalizarViagem, button#voltar {
+    padding: 0.6em 1.2em;
+    font-size: 1em;
+    background-color: var(--azul-claro);
+    color: var(--branco);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+button#finalizarViagem:hover, button#voltar:hover  {
+    background-color: #336ab3;
+    transform: scale(1.05); /* Leve efeito de zoom no hover */
+}
+
+/* Rodapé */
+footer {
+    width: 100%;
+    background-color: var(--azul-escuro);
+    color: #fff;
+    padding: 20px 0;
+    text-align: center;
+}
+
+.footer-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.footer-content p {
+    margin: 10px 0;
+}
+
+.footer-content a {
+    color: #3498db;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.footer-content a:hover {
+    text-decoration: underline;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    h1 {
+        font-size: 2em;
+    }
+
+    .dados-resumo {
+        width: 95%;
+        padding: 1em;
+    }
+
+    header img {
+        max-width: 100px; /* Reduz tamanho da logo em telas menores */
+    }
+}
+
+@media (max-width: 480px) {
+    h1 {
+        font-size: 1.8em;
+    }
+
+    .dados-passo h3 {
+        font-size: 1.2em;
+    }
+}

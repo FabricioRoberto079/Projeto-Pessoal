@@ -1,0 +1,130 @@
+:root {
+    --azul-claro: #3a7bd5;
+    --azul-escuro: #2b4f7c;
+    --cinza-claro: #f5f5f5;
+    --branco: #ffffff;
+}
+
+/* Reset e estilo global */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Noto Sans", sans-serif;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--cinza-claro);
+    height: 100vh;
+}
+
+/* Container da contribuição */
+.contribuicao-container {
+    background-color: var(--branco);
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    max-width: 400px;
+    width: 90%;
+    color: var(--azul-escuro);
+    min-height: auto;
+    overflow: hidden;
+    transition: box-shadow 0.3s ease;
+}
+
+.contribuicao-container:hover {
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+
+/* Título */
+.contribuicao-container h1 {
+    font-size: 1.8em;
+    margin-bottom: 15px;
+    color: var(--azul-claro);
+}
+
+/* Mensagem */
+.mensagem {
+    font-size: 1em;
+    margin-bottom: 20px;
+    color: #555;
+    line-height: 1.6;
+}
+
+/* Chave Pix */
+.pix-key {
+    font-size: 1.1em;
+    margin: 15px 0;
+    padding: 8px;
+    background-color: var(--cinza-claro);
+    border-radius: 5px;
+    color: var(--azul-escuro);
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    word-break: break-word;
+    width: 100%;
+    display: inline-block;
+    text-align: center;
+}
+
+.pix-key:hover {
+    background-color: #e1e9f2;
+}
+
+/* Botão de cópia */
+.copy-button {
+    background-color: var(--azul-claro);
+    color: var(--branco);
+    border: none;
+    padding: 10px 25px;
+    font-size: 1em;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    margin-top: 10px;
+}
+
+.copy-button:hover {
+    background-color: #81D4FA;
+    transform: scale(1.05);
+}
+
+/* QR Code */
+.qrcode {
+    margin: 30px 0;
+    border: 4px solid var(--cinza-claro);
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    padding: 10px;
+    background-color: var(--branco);
+}
+
+.qrcode img {
+    max-width: 100%;
+    height: auto;
+}
+
+/* Ajuste responsivo */
+@media (max-width: 768px) {
+    .contribuicao-container {
+        padding: 20px;
+    }
+
+    .contribuicao-container h1 {
+        font-size: 1.5em;
+    }
+
+    .mensagem {
+        font-size: 0.9em;
+    }
+
+    .copy-button {
+        font-size: 0.9em;
+        padding: 8px 15px;
+    }
+}
