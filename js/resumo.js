@@ -61,6 +61,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Verifica e adiciona evento ao botão de finalizar
     if (finalizarBtn) {
         finalizarBtn.addEventListener('click', function() {
+            gerarPDF()
             localStorage.clear();  // Limpa todos os dados da viagem
             alert("Viagem finalizada com sucesso!");
             window.location.href = 'index.html';  // Retorna à página inicial
