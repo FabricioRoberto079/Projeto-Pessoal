@@ -11,6 +11,32 @@ document.addEventListener('DOMContentLoaded', function () {
 
     const viagemIniciada = localStorage.getItem('viagemIniciada')
 
+    document.querySelectorAll('.nomeInput').forEach(input => {
+        input.addEventListener('input', (event) => {
+            event.target.value = event.target.value.replace(/\b\w/g, (c) => c.toUpperCase());
+        });
+    });
+
+    // Validação para campo de placa (formato: ABC-1234)
+    document.querySelectorAll('.placaInput').forEach(input => {
+        input.addEventListener('input', (event) => {
+            let value = event.target.value.toUpperCase().replace(/[^A-Z0-9]/g, "");
+            if (value.length > 3) {
+                value = value.replace(/(\w{3})(\w{1,4})/, "$1-$2");
+            }
+            event.target.value = value;
+        });
+    });
+
+    // Validação para campos de valor em formato de moeda (R$ X,00)
+    document.querySelectorAll('.valorInput').forEach(input => {
+        input.addEventListener('input', (event) => {
+            let value = event.target.value.replace(/\D/g, "");
+            value = (parseFloat(value) / 100).toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
+            event.target.value = value;
+        });
+    });
+
     document.querySelectorAll('.dataInput').forEach(input => {
         input.addEventListener('input', (event) => {
             let value = event.target.value.replace(/\D/g, "");
