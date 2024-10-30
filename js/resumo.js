@@ -50,7 +50,8 @@ document.addEventListener('DOMContentLoaded', function() {
             resumoLista.innerHTML = `
                 <li><strong>Total Recebimento:</strong> R$ ${resumoViagem.totalRecebimento}</li>
                 <li><strong>Total Abastecimento:</strong> R$ ${resumoViagem.totalAbastecimento}</li>
-                <li><strong>Total Despesas Gerais:</strong> R$ ${resumoViagem.totalDespesas}</li>
+                <li><strong>Despesas Gerais:</strong> R$ ${resumoViagem.totalDespesas}</li>
+                <li><strong>Total Despesas:</strong> R$ ${resumoViagem.despesaGeral}</li>
                 <li><strong>Total Diárias Recebidas:</strong> R$ ${resumoViagem.totalDiarias}</li>
                 <li><strong>Valor Final a Receber:</strong> R$ ${resumoViagem.valorFinal}</li>
             `;

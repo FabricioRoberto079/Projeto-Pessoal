@@ -236,7 +236,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         // Cálculo do total de recebimentos, abastecimentos e despesas
-        const totalRecebimento = dadosPasso4.reduce((total, item) => total + parseFloat(item["Valor-do-Recebimento"] || 0), 0);
+        const totalRecebimento = dadosPasso4.reduce((total, item) => total + limparFormatoMoeda(item["Valor-do-Recebimento"]), 0);
 
         const totalAbastecimento = dadosPasso3.reduce((total, item) => total + limparFormatoMoeda(item["Valor-do-Abastecimento"]), 0);
         const totalAbastecimentoDifCartao = dadosPasso3.reduce((total, item) => {
@@ -270,6 +270,8 @@ document.addEventListener('DOMContentLoaded', function () {
         const valorDiaria = limparFormatoMoeda(dadosPasso1[0]["Valor-da-Diária"]);
         const totalDiarias = valorDiaria * totalDiasPassados; // Total de diárias para todas as viagens
 
+        const despesaGeral = totalAbastecimento + totalDespesas
+
         // Calculando o valor final
         const valorFinal = totalRecebimento - (totalAbastecimentoDifCartao + totalDespesasDifCartao + totalDiarias);
         const resumoViagem = {
@@ -278,6 +280,7 @@ document.addEventListener('DOMContentLoaded', function () {
             totalDespesas,
             totalDiarias,
             valorFinal,
+            despesaGeral,
             totalDiasPassados // Adicionando total de dias ao resumo
         };
 
