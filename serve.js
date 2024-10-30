@@ -51,9 +51,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function validarCampos(passoAtual) {
         const inputs = document.querySelectorAll(`[data-passo="${passoAtual}"] input`);
-    
+
         let todosPreenchidos = true; // Variável para rastrear se todos os campos estão preenchidos
-    
+
         inputs.forEach((input) => {
             const valor = input.value.trim();
             // Verifica se o campo está vazio
@@ -61,14 +61,14 @@ document.addEventListener('DOMContentLoaded', function () {
                 console.log(`Campo ${input.name} está vazio.`);
                 todosPreenchidos = false; // Marca como falso se algum campo estiver vazio
             }
-    
+
             // Verifica se é uma data e se está completa no formato DD/MM/AAAA
             if (input.classList.contains('dataInput') && valor.length !== 10) {
                 console.log(`Campo de data ${input.name} não está no formato DD/MM/AAAA.`);
                 todosPreenchidos = false; // Marca como falso se a data não estiver no formato correto
             }
         });
-    
+
         // Se não todos os campos estão preenchidos, mas existem dados salvos no localStorage, preencha os inputs
         if (!todosPreenchidos) {
             const dadosSalvos = JSON.parse(localStorage.getItem(`dadosPasso${passoAtual}`)) || [];
@@ -81,10 +81,10 @@ document.addEventListener('DOMContentLoaded', function () {
                 });
             }
         }
-    
+
         return todosPreenchidos; // Retorna se todos os campos estão preenchidos
     }
-    
+
 
     function mostrarPasso(passo) {
         passos.forEach(function (divPasso) {
@@ -169,6 +169,13 @@ document.addEventListener('DOMContentLoaded', function () {
         })
     }
 
+    function limparFormatoMoeda(valor) {
+        if (typeof valor === 'string') {
+            return parseFloat(valor.replace(/[^\d,-]/g, '').replace(',', '.'));
+        }
+        return parseFloat(valor) || 0;
+    }
+
     iniciarViagemBtn.addEventListener('click', function () {
         if (validarCampos("1")) { // Você pode querer deixar isso como "1" para validar o passo inicial
             console.log("Passo 1 validado com sucesso.");
@@ -183,22 +190,35 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
     adicionarBtn.addEventListener('click', function () {
+        const dataInicioInput = document.querySelector(`[data-passo="${passoAtual}"] [name="Data-Inicio-do-Frete"]`)
+        const datafimInput = document.querySelector(`[data-passo="${passoAtual}"] [name="Data-Final-do-Frete"]`)
+
+        if (dataInicioInput && datafimInput) {
+            const dataInicial = new Date(dataInicioInput.value.split('/').reverse().join('-') || "");
+            const dataFinal = new Date(datafimInput.value.split('/').reverse().join('-') || "");
+
+            if (dataInicial > dataFinal) {
+                alert("A data inicial não pode ser maior que a data final.")
+                return
+            }
+        }
+
         if (validarCampos(passoAtual)) { // Valida o passo atual
             salvarDados(passoAtual);
             alert(`Dados do passo ${passoAtual} salvos com sucesso`);
             limparInputs(passoAtual);
-    
+
             const listaDados = JSON.parse(localStorage.getItem(`dadosPasso${passoAtual}`)) || [];
             console.log(`Todos os dados do passo ${passoAtual}:`, listaDados);
-            
+
             // Atualiza a exibição dos dados imediatamente após adicionar um novo item
             mostrarPasso(passoAtual); // Isso irá recarregar o estado atual dos dados
-            
+
         } else {
             alert("Por favor, preencha todos os campos obrigatórios antes de adicionar.");
         }
     });
-    
+
 
     dadosAdicionados.addEventListener('click', function () {
         window.location.href = 'dadosSalvos.html'
@@ -209,33 +229,45 @@ document.addEventListener('DOMContentLoaded', function () {
         const dadosPasso3 = JSON.parse(localStorage.getItem('dadosPasso3')) || [];
         const dadosPasso4 = JSON.parse(localStorage.getItem('dadosPasso4')) || [];
         const dadosPasso5 = JSON.parse(localStorage.getItem('dadosPasso5')) || [];
-    
+
         if (dadosPasso2.length === 0) {
             console.error("Não há dados salvos para o passo 2.");
             return; // Evita erro se não houver dados
         }
-    
+
         // Cálculo do total de recebimentos, abastecimentos e despesas
         const totalRecebimento = dadosPasso4.reduce((total, item) => total + parseFloat(item["Valor-do-Recebimento"] || 0), 0);
-        const totalAbastecimento = dadosPasso3.reduce((total, item) => total + parseFloat(item["Valor-do-Abastecimento"] || 0), 0);
-        const totalDespesas = dadosPasso5.reduce((total, item) => total + parseFloat(item["Valor-da-Despesa"] || 0), 0);
-    
+
+        const totalAbastecimento = dadosPasso3.reduce((total, item) => {
+            if (item["Forma-do-Abastecimento"] !== "Cartão") {
+                return total + limparFormatoMoeda(item["Valor-do-Abastecimento"])
+            }
+            return total
+        }, 0);
+
+        const totalDespesas = dadosPasso5.reduce((total, item) => {
+            if (item["Forma-do-Pagamento"] !== "Cartão") {
+                return total + limparFormatoMoeda(item["Valor-da-Despesa"])
+            }
+            return total
+        }, 0);
+
         // Cálculo total de dias passados em viagens
         let totalDiasPassados = 0;
         dadosPasso2.forEach(item => {
             const dataInicial = new Date(item["Data-Inicio-do-Frete"].split('/').reverse().join('-') || "");
             const dataFinal = new Date(item["Data-Final-do-Frete"].split('/').reverse().join('-') || "");
-            
-            const diffTime = Math.abs(dataFinal - dataInicial);
-            const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24)); 
 
-            totalDiasPassados += diffDays; 
+            const diffTime = Math.abs(dataFinal - dataInicial);
+            const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+
+            totalDiasPassados += diffDays;
         });
-    
+
         // Calculando o total de diárias
-        const valorDiaria = parseFloat(dadosPasso1[0]["Valor-da-Diária"] || 0);
+        const valorDiaria = limparFormatoMoeda(dadosPasso1[0]["Valor-da-Diária"]);
         const totalDiarias = valorDiaria * totalDiasPassados; // Total de diárias para todas as viagens
-    
+
         // Calculando o valor final
         const valorFinal = totalRecebimento - (totalAbastecimento + totalDespesas + totalDiarias);
         const resumoViagem = {
@@ -246,7 +278,7 @@ document.addEventListener('DOMContentLoaded', function () {
             valorFinal,
             totalDiasPassados // Adicionando total de dias ao resumo
         };
-    
+
         // Salvando os dados no localStorage e redirecionando
         localStorage.setItem('resumoViagem', JSON.stringify(resumoViagem))
         window.location.href = 'resumo.html'
