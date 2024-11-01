@@ -114,7 +114,48 @@ h1 {
     color: #0079E6;
 }
 
-/* Button styling */
+/* Input de anexo estilizado */
+.inputViagem input[type="file"] {
+    opacity: 0; /* Oculta o input de arquivo padrão */
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+}
+
+.inputViagem label {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    background-color: #3498db;
+    color: #fff;
+    border-radius: 25px;
+    padding: 10px;
+    font-weight: bold;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+    cursor: pointer;
+    box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1);
+}
+
+.inputViagem label:hover {
+    background-color: #81D4FA;
+
+}
+
+.inputViagem label i {
+    margin-right: 8px;
+    font-size: 18px;
+    color: #ffffff;
+}
+
+.inputViagem label span {
+    padding-left: 18px; /* Espaço extra à esquerda do texto */
+}
+
+
 /* Button styling */
 button {
     border-radius: 20px;
@@ -230,6 +271,21 @@ footer {
     section {
         width: 90%;
         padding: 15px;
+    }
+
+    .inputViagem label {
+        padding: 8px;
+        font-size: 14px;
+        border-radius: 20px;
+    }
+
+    .inputViagem label i {
+        font-size: 16px; 
+        margin-right: 8px; 
+    }
+
+    .inputViagem label span {
+        font-size: 14px; 
     }
 
     button {
