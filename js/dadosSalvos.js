@@ -26,7 +26,19 @@ document.addEventListener('DOMContentLoaded', function() {
                     const lista = document.createElement('ul');
                     for (const [chave, valor] of Object.entries(dados)) {
                         const item = document.createElement('li');
-                        item.textContent = `${chave}: ${valor}`;
+                        
+                        if (chave === 'imagemViagem' && valor.startsWith('data:image')) {
+                            // Adiciona a imagem como <img> se for um valor base64
+                            const img = document.createElement('img');
+                            img.src = valor;
+                            img.alt = 'Imagem da Viagem';
+                            img.style.width = '100px'; // Define a largura da imagem
+                            img.style.height = 'auto';
+                            item.appendChild(img);
+                        } else {
+                            // Adiciona outros dados normalmente
+                            item.textContent = `${chave}: ${valor}`;
+                        }
                         lista.appendChild(item);
                     }
 

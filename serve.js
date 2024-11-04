@@ -192,32 +192,85 @@ document.addEventListener('DOMContentLoaded', function () {
     adicionarBtn.addEventListener('click', function () {
         const dataInicioInput = document.querySelector(`[data-passo="${passoAtual}"] [name="Data-Inicio-do-Frete"]`)
         const datafimInput = document.querySelector(`[data-passo="${passoAtual}"] [name="Data-Final-do-Frete"]`)
-
+    
         if (dataInicioInput && datafimInput) {
             const dataInicial = new Date(dataInicioInput.value.split('/').reverse().join('-') || "");
             const dataFinal = new Date(datafimInput.value.split('/').reverse().join('-') || "");
-
+    
             if (dataInicial > dataFinal) {
                 alert("A data inicial não pode ser maior que a data final.")
                 return
             }
         }
-
+    
         if (validarCampos(passoAtual)) { // Valida o passo atual
-            salvarDados(passoAtual);
+            const dados = {};
+            document.querySelectorAll(`[data-passo="${passoAtual}"] input, [data-passo="${passoAtual}"] select`).forEach(element => {
+                dados[element.name] = element.value;
+            });
+    
+            if (passoAtual === "3") {
+                const anexoInput = document.getElementById('anexo'); // ID do input de arquivo
+                const file = anexoInput ? anexoInput.files[0] : null;
+    
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function () {
+                        dados.imagemViagem = reader.result; // Adiciona a imagem em Base64
+                        salvarDadosComImagem(passoAtual, dados); // Chama função para salvar os dados com imagem
+                    };
+                    reader.readAsDataURL(file); // Lê a imagem como Data URL
+                } else {
+                    salvarDadosComImagem(passoAtual, dados); // Salva sem imagem se não houver
+                }
+            } else {
+                salvarDados(passoAtual); // Salva normalmente para passos diferentes
+            }
+    
             alert(`Dados do passo ${passoAtual} salvos com sucesso`);
             limparInputs(passoAtual);
-
+    
             const listaDados = JSON.parse(localStorage.getItem(`dadosPasso${passoAtual}`)) || [];
             console.log(`Todos os dados do passo ${passoAtual}:`, listaDados);
-
+    
             // Atualiza a exibição dos dados imediatamente após adicionar um novo item
             mostrarPasso(passoAtual); // Isso irá recarregar o estado atual dos dados
-
+    
         } else {
             alert("Por favor, preencha todos os campos obrigatórios antes de adicionar.");
         }
     });
+    
+    // Função para salvar dados incluindo imagem
+    function salvarDadosComImagem(passo, dados) {
+        let listaDados = JSON.parse(localStorage.getItem(`dadosPasso${passo}`)) || [];
+    
+        if (Array.isArray(listaDados)) {
+            listaDados.push(dados);
+        } else {
+            listaDados = [dados];
+        }
+    
+        // Cálculo de Km rodado e média de consumo para o passo 3
+        if (passo === "3") {
+            const KmInicial = parseFloat(dados["Km-Inicial-do-Abastecimento"]) || 0;
+            const KmFinal = parseFloat(dados["Km-Final-do-Abastecimento"]) || 0;
+            const quantidadeCombustivel = parseFloat(dados["Litros-do-Abastecimento"]) || 0;
+    
+            const kmRodado = KmFinal - KmInicial;
+            let mediaConsumo = 0;
+            if (quantidadeCombustivel > 0) {
+                mediaConsumo = kmRodado / quantidadeCombustivel;
+            }
+    
+            dados.kmRodado = kmRodado;
+            dados.mediaConsumo = mediaConsumo.toFixed(2);
+        }
+    
+        localStorage.setItem(`dadosPasso${passo}`, JSON.stringify(listaDados));
+        console.log(`Dados do passo ${passo} salvos no localStorage:`, listaDados);
+    }
+    
 
 
     dadosAdicionados.addEventListener('click', function () {
