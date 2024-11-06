@@ -73,9 +73,9 @@ document.addEventListener('DOMContentLoaded', function() {
     if (finalizarBtn) {
         finalizarBtn.addEventListener('click', function() {
             gerarPDF()
-            //localStorage.clear();  // Limpa todos os dados da viagem
-            //alert("Viagem finalizada com sucesso!");
-            //window.location.href = 'index.html';  // Retorna à página inicial
+            localStorage.clear();  // Limpa todos os dados da viagem
+            alert("Viagem finalizada com sucesso!");
+            window.location.href = 'index.html';  // Retorna à página inicial
         });
     }
 
