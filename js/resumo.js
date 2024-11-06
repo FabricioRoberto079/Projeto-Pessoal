@@ -4,13 +4,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Função para carregar e exibir dados
     function carregarDados() {
-        dadosResumoDiv.innerHTML = ''; // Limpa qualquer dado anterior na div
+        dadosResumoDiv.innerHTML = ''; 
 
-        // Carregar e exibir dados de cada passo
+        // Loop para carregar dados de cada passo
         for (let passo = 1; passo <= 5; passo++) {
             const dadosPasso = JSON.parse(localStorage.getItem(`dadosPasso${passo}`)) || [];
-
-            console.log(`Dados do passo ${passo}:`, dadosPasso); // Debug para verificar dados
 
             // Exibir dados se existir algum no localStorage
             if (dadosPasso.length > 0) {
@@ -29,7 +27,19 @@ document.addEventListener('DOMContentLoaded', function() {
                     const lista = document.createElement('ul');
                     for (const [chave, valor] of Object.entries(dados)) {
                         const item = document.createElement('li');
-                        item.textContent = `${chave}: ${valor}`;
+                        
+                        if (chave === 'imagemViagem' && valor.startsWith('data:image')) {
+                            // Adiciona a imagem como <img> se for um valor base64
+                            const img = document.createElement('img');
+                            img.src = valor;
+                            img.alt = 'Imagem da Viagem';
+                            img.style.width = '100px'; // Define a largura da imagem
+                            img.style.height = 'auto';
+                            item.appendChild(img);
+                        } else {
+                            // Adiciona outros dados normalmente
+                            item.textContent = `${chave}: ${valor}`;
+                        }
                         lista.appendChild(item);
                     }
 
@@ -63,9 +73,9 @@ document.addEventListener('DOMContentLoaded', function() {
     if (finalizarBtn) {
         finalizarBtn.addEventListener('click', function() {
             gerarPDF()
-            localStorage.clear();  // Limpa todos os dados da viagem
-            alert("Viagem finalizada com sucesso!");
-            window.location.href = 'index.html';  // Retorna à página inicial
+            //localStorage.clear();  // Limpa todos os dados da viagem
+            //alert("Viagem finalizada com sucesso!");
+            //window.location.href = 'index.html';  // Retorna à página inicial
         });
     }
 
@@ -83,10 +93,10 @@ async function gerarPDF() {
     const doc = new jsPDF("p", "mm", "a4");
     const pageWidth = doc.internal.pageSize.getWidth();
     const pageHeight = doc.internal.pageSize.getHeight();
+    let y = 30; // Posição vertical inicial
 
-    // Adiciona Cabeçalho e Rodapé com logo e design aprimorado
+    // Função para adicionar cabeçalho e rodapé
     function adicionarCabecalhoRodape() {
-        // Cabeçalho estilizado com logo e título centralizado
         doc.setFontSize(10);
         doc.setTextColor(58, 123, 213);
         doc.addImage('imagens/DriverLog.png', 'PNG', 10, 5, 20, 20);
@@ -96,7 +106,7 @@ async function gerarPDF() {
         doc.setDrawColor(200, 200, 200);
         doc.line(10, 25, pageWidth - 10, 25);
 
-        // Rodapé estilizado
+        // Rodapé
         doc.setLineWidth(0.5);
         doc.line(10, pageHeight - 15, pageWidth - 10, pageHeight - 15);
         doc.setFontSize(10);
@@ -104,57 +114,68 @@ async function gerarPDF() {
         doc.text("© 2024 Driver Log - Desenvolvedor: Fabrício Roberto", pageWidth / 2, pageHeight - 10, { align: "center" });
     }
 
-    adicionarCabecalhoRodape();
+    adicionarCabecalhoRodape(); // Cabeçalho inicial na primeira página
 
-    // Função para desenhar caixas estilizadas com sombra e fundo gradiente
-    let y = 30;
-    function desenhaCaixa(titulo, conteudo) {
-        const alturaCaixa = conteudo.length * 8 + 12;
-        if (y + alturaCaixa + 20 > pageHeight - 20) { // Nova página se necessário
+    // Função para adicionar uma seção com título, conteúdo e imagem (caso haja)
+    function adicionarSecao(titulo, conteudo, imagem = null) {
+        const alturaImagem = imagem ? 50 : 0;
+        const alturaConteudo = conteudo.length * 8 + alturaImagem + 10;
+
+        // Quebra de página suave
+        if (y + alturaConteudo > pageHeight - 20) {
             doc.addPage();
             y = 30;
             adicionarCabecalhoRodape();
         }
 
-        // Título da seção com estilo aprimorado
+        // Título da seção
         doc.setFontSize(14);
         doc.setTextColor(43, 79, 124);
         doc.text(titulo, 10, y);
         y += 10;
 
+        // Linha separadora
         doc.setDrawColor(58, 123, 213);
-        doc.setFillColor(245, 245, 245);
         doc.setLineWidth(0.3);
-        doc.roundedRect(10, y, pageWidth - 20, alturaCaixa, 3, 3, 'FD');
+        doc.line(10, y, pageWidth - 10, y);
+        y += 5;
 
         // Conteúdo da seção
-        y += 10;
         doc.setFontSize(12);
         doc.setTextColor(0, 0, 0);
         conteudo.forEach(texto => {
-            if (y > pageHeight - 20) { // Nova página se necessário
+            if (y > pageHeight - 20) {
                 doc.addPage();
                 y = 30;
                 adicionarCabecalhoRodape();
+                doc.setFontSize(12);
             }
             doc.text(texto, 15, y);
             y += 8;
         });
-        y += 12;
+
+        // Adiciona a imagem imediatamente após o conteúdo
+        if (imagem) {
+            y += 5;
+            doc.addImage(imagem, 'JPEG', 15, y, 50, 50);
+            y += 60; // Espaçamento após a imagem
+        } else {
+            y += 10;
+        }
     }
 
-    // Prepara os dados para cada passo
+    // Captura e processa os elementos HTML
     const dadosResumoDiv = document.getElementById('dadosResumo');
-    const elementos = dadosResumoDiv.querySelectorAll('h2, h3, li');
+    const elementos = dadosResumoDiv.querySelectorAll('h2, h3, li, img');
 
     let conteudoPasso = [];
     let passoTitulo = "";
-
-    // Processa os elementos para inserção no PDF
+    
+    // Agora as imagens são adicionadas diretamente após cada conteúdo
     elementos.forEach(el => {
         if (el.tagName === 'H2') {
             if (conteudoPasso.length > 0) {
-                desenhaCaixa(passoTitulo, conteudoPasso);
+                adicionarSecao(passoTitulo, conteudoPasso);
                 conteudoPasso = [];
             }
             passoTitulo = el.textContent;
@@ -162,14 +183,19 @@ async function gerarPDF() {
             conteudoPasso.push("• " + el.textContent);
         } else if (el.tagName === 'LI') {
             conteudoPasso.push("    - " + el.textContent);
+        } else if (el.tagName === 'IMG') {
+            // Se encontrar uma imagem, adiciona-a imediatamente após o conteúdo atual
+            adicionarSecao(passoTitulo, conteudoPasso, el.src);
+            conteudoPasso = []; // Reseta para o próximo passo
+            passoTitulo = ""; // Reseta o título para evitar duplicação
         }
     });
 
+    // Adiciona qualquer conteúdo restante
     if (conteudoPasso.length > 0) {
-        desenhaCaixa(passoTitulo, conteudoPasso);
+        adicionarSecao(passoTitulo, conteudoPasso);
     }
 
     // Salva o PDF final
     doc.save("Resumo_da_Viagem.pdf");
 }
-
