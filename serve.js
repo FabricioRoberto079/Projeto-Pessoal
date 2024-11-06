@@ -58,13 +58,11 @@ document.addEventListener('DOMContentLoaded', function () {
             const valor = input.value.trim();
             // Verifica se o campo está vazio
             if (!valor) {
-                console.log(`Campo ${input.name} está vazio.`);
                 todosPreenchidos = false; // Marca como falso se algum campo estiver vazio
             }
 
             // Verifica se é uma data e se está completa no formato DD/MM/AAAA
             if (input.classList.contains('dataInput') && valor.length !== 10) {
-                console.log(`Campo de data ${input.name} não está no formato DD/MM/AAAA.`);
                 todosPreenchidos = false; // Marca como falso se a data não estiver no formato correto
             }
         });
@@ -128,7 +126,7 @@ document.addEventListener('DOMContentLoaded', function () {
     function salvarDados(passo) {
 
         if (!validarCampos(passo)) {
-            alert("Por favor, preencha todos os campos de data no formato DD/MM/AAAA.");
+            alert("Por favor, preencha todos os campos da forma correta.");
             return;
         }
 
@@ -160,7 +158,6 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         localStorage.setItem(`dadosPasso${passo}`, JSON.stringify(listaDados));
-        console.log(`Dados do passo ${passo} salvos no localStorage:`, listaDados);
     }
 
     function limparInputs(passo) {
@@ -227,7 +224,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 salvarDados(passoAtual); // Salva normalmente para passos diferentes
             }
     
-            alert(`Dados do passo ${passoAtual} salvos com sucesso`);
             limparInputs(passoAtual);
     
             const listaDados = JSON.parse(localStorage.getItem(`dadosPasso${passoAtual}`)) || [];
@@ -268,7 +264,6 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     
         localStorage.setItem(`dadosPasso${passo}`, JSON.stringify(listaDados));
-        console.log(`Dados do passo ${passo} salvos no localStorage:`, listaDados);
     }
     
 
@@ -283,10 +278,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const dadosPasso4 = JSON.parse(localStorage.getItem('dadosPasso4')) || [];
         const dadosPasso5 = JSON.parse(localStorage.getItem('dadosPasso5')) || [];
 
-        if (dadosPasso2.length === 0) {
-            console.error("Não há dados salvos para o passo 2.");
-            return; // Evita erro se não houver dados
-        }
+
 
         // Cálculo do total de recebimentos, abastecimentos e despesas
         const totalRecebimento = dadosPasso4.reduce((total, item) => total + limparFormatoMoeda(item["Valor-do-Recebimento"]), 0);
