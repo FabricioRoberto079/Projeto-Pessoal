@@ -11,6 +11,15 @@ document.addEventListener('DOMContentLoaded', function () {
 
     const viagemIniciada = localStorage.getItem('viagemIniciada')
 
+    document.querySelectorAll('.litrosKmInput').forEach(input => {
+        input.addEventListener('input', (event) => {
+            event.target.value = event.target.value.replace(/[^0-9,]/g, ''); // Permite apenas números e vírgula
+        });
+        input.addEventListener('blur', (event) => {
+            event.target.value = event.target.value.replace(',', '.'); // Substitui a vírgula por ponto ao sair do campo
+        });
+    });
+
     document.querySelectorAll('.nomeInput').forEach(input => {
         input.addEventListener('input', (event) => {
             event.target.value = event.target.value.replace(/\b\w/g, (c) => c.toUpperCase());
