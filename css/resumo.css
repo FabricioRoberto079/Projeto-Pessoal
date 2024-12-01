@@ -74,12 +74,12 @@ main {
     color: var(--azul-claro);
 }
 
-.dados-passo ul {
+ul {
     list-style-type: none;
     padding: 0;
 }
 
-.dados-passo li {
+li {
     padding: 0.5em 0;
     border-bottom: 1px solid #ddd;
     color: #555;
