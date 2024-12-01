@@ -58,14 +58,15 @@ document.addEventListener('DOMContentLoaded', function() {
 
             const resumoLista = document.createElement('ul');
             resumoLista.innerHTML = `
-                <li><strong>Total Recebimento:</strong> R$ ${resumoViagem.totalRecebimento}</li>
-                <li><strong>Total Abastecimento:</strong> R$ ${resumoViagem.totalAbastecimento}</li>
-                <li><strong>Despesas Gerais:</strong> R$ ${resumoViagem.totalDespesas}</li>
-                <li><strong>Total Despesas:</strong> R$ ${resumoViagem.despesaGeral}</li>
-                <li><strong>Total Diárias Recebidas:</strong> R$ ${resumoViagem.totalDiarias}</li>
-                <li><strong>Valor Final a Receber:</strong> R$ ${resumoViagem.valorFinal}</li>
+                <li><strong>Total Recebimento:</strong> R$ ${resumoViagem.totalRecebimento.toFixed(2)} <span>(Valor total recebido pelo frete)</span></li>
+                <li><strong>Total Abastecimento:</strong> R$ ${resumoViagem.totalAbastecimento.toFixed(2)} <span>(Custos com combustível)</span></li>
+                <li><strong>Despesas Gerais:</strong> R$ ${resumoViagem.totalDespesas.toFixed(2)} <span>(Outras despesas: pedágios, refeições, etc.)</span></li>
+                <li><strong>Total Despesas:</strong> R$ ${resumoViagem.despesaGeral.toFixed(2)} <span>(Abastecimento + Despesas Gerais)</span></li>
+                <li><strong>Total Diárias Recebidas:</strong> R$ ${resumoViagem.totalDiarias.toFixed(2)} <span>(Valor recebido para cobrir hospedagem e alimentação)</span></li>
+                <li><strong>Valor Final da Viagem:</strong> R$ ${resumoViagem.valorFinal.toFixed(2)} <span>(Recebimento - Total Despesas incluso as diárias)</span></li>
             `;
             dadosResumoDiv.appendChild(resumoLista);
+            
         }
     }
 
