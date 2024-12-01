@@ -100,18 +100,28 @@ document.addEventListener('DOMContentLoaded', function () {
                     input.className = 'litrosKmInput';
                     break;
 
-                case 'imagemViagem':
-                    input.type = 'file';
-                    input.accept = 'image/*';
-                    input.addEventListener('change', (event) => {
-                        const reader = new FileReader();
-                        reader.onload = () => {
-                            dados[chave] = reader.result;
-                        };
-                        reader.readAsDataURL(event.target.files[0]);
-                    });
-                    div.innerHTML = '';
-                    break;
+                    case 'imagemViagem':
+                        input.type = 'file';
+                        input.accept = 'image/*';
+                        input.id = 'imagemInput';
+                        
+                        const label = document.createElement('label');
+                        label.htmlFor = 'imagemInput';
+                        label.textContent = 'Selecionar ou Tirar Foto';
+                        label.className = 'labelUpload'; // Classe para estilização do botão
+                    
+                        input.addEventListener('change', (event) => {
+                            const reader = new FileReader();
+                            reader.onload = () => {
+                                dados[chave] = reader.result;
+                            };
+                            reader.readAsDataURL(event.target.files[0]);
+                        });
+                    
+                        div.innerHTML = ''; // Limpa o conteúdo da `div`
+                        div.appendChild(input); // Adiciona o campo de upload
+                        div.appendChild(label); // Adiciona o botão estilizado
+                        break;
 
                 default:
                     input.className = 'nomeInput';
