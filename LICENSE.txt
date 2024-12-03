@@ -1,0 +1,37 @@
+LICENÇA DE USO RESTRITO - BETA (Versão 1.0)
+
+Título do Projeto: Driver-Log
+Autor(es): Fabrício Roberto Oliveira Santos
+Data de Emissão: 03/12/2024
+
+1. Definição
+Esta licença regula o uso do projeto atualmente em fase beta. O autor, Fabrício Roberto Oliveira Santos, mantém todos os direitos sobre o projeto, incluindo código-fonte, design, e quaisquer elementos relacionados.
+
+2. Permissões
+2.1. O usuário tem permissão para:
+
+Avaliar e testar o projeto para fins não comerciais.
+Relatar erros, fornecer feedback e sugerir melhorias diretamente ao autor.
+2.2. O uso é restrito às condições descritas abaixo.
+
+3. Restrições
+3.1. O usuário não pode:
+
+Utilizar o projeto para fins comerciais.
+Redistribuir, copiar ou modificar qualquer parte do projeto sem autorização prévia por escrito do autor.
+Divulgar informações confidenciais, como documentação técnica ou funcionalidades, a terceiros sem consentimento.
+3.2. Qualquer uso que viole estas restrições será considerado infração de direitos autorais e propriedade intelectual.
+
+4. Propriedade Intelectual
+Todos os direitos, incluindo mas não limitados a código, design, marcas registradas e funcionalidades, permanecem com o autor.
+
+5. Isenção de Garantia
+O projeto é fornecido "no estado em que se encontra", sem qualquer garantia de funcionamento, suporte ou adequação a um propósito específico. O autor não se responsabiliza por quaisquer danos diretos ou indiretos decorrentes do uso do projeto.
+
+6. Validade
+Esta licença é válida até:
+
+A publicação oficial de uma versão comercial; ou
+Alteração formal por parte do autor.
+7. Contato
+Para esclarecimentos, permissões adicionais ou feedback, entre em contato pelo e-mail: fabricioroberto360@gmail.com .
