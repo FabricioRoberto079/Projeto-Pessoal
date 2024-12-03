@@ -1,10 +1,10 @@
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     const dadosResumoDiv = document.getElementById('dadosResumo');
     const finalizarBtn = document.getElementById('finalizarViagem');
 
     // Função para carregar e exibir dados
     function carregarDados() {
-        dadosResumoDiv.innerHTML = ''; 
+        dadosResumoDiv.innerHTML = '';
 
         // Loop para carregar dados de cada passo
         for (let passo = 1; passo <= 5; passo++) {
@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     const lista = document.createElement('ul');
                     for (const [chave, valor] of Object.entries(dados)) {
                         const item = document.createElement('li');
-                        
+
                         if (chave === 'imagemViagem' && valor.startsWith('data:image')) {
                             // Adiciona a imagem como <img> se for um valor base64
                             const img = document.createElement('img');
@@ -58,25 +58,28 @@ document.addEventListener('DOMContentLoaded', function() {
 
             const resumoLista = document.createElement('ul');
             resumoLista.innerHTML = `
-                <li><strong>Total Recebimento:</strong> R$ ${resumoViagem.totalRecebimento.toFixed(2)} <span>(Valor total recebido pelo frete)</span></li>
-                <li><strong>Total Abastecimento:</strong> R$ ${resumoViagem.totalAbastecimento.toFixed(2)} <span>(Custos com combustível)</span></li>
-                <li><strong>Despesas Gerais:</strong> R$ ${resumoViagem.totalDespesas.toFixed(2)} <span>(Outras despesas: pedágios, refeições, etc.)</span></li>
-                <li><strong>Total Despesas:</strong> R$ ${resumoViagem.despesaGeral.toFixed(2)} <span>(Abastecimento + Despesas Gerais)</span></li>
-                <li><strong>Total Diárias Recebidas:</strong> R$ ${resumoViagem.totalDiarias.toFixed(2)} <span>(Valor recebido para cobrir hospedagem e alimentação)</span></li>
-                <li><strong>Valor Final da Viagem:</strong> R$ ${resumoViagem.valorFinal.toFixed(2)} <span>(Recebimento - Total Despesas incluso as diárias)</span></li>
+            <li><strong>Total Recebimento:</strong> R$ ${resumoViagem.totalRecebimento.toFixed(2)} <span>(Valor total recebido pelo frete)</span></li>
+            <li><strong>Total Abastecimento:</strong> R$ ${resumoViagem.totalAbastecimento.toFixed(2)} <span>(Custos com combustível)</span></li>
+            <li><strong>Despesas Gerais:</strong> R$ ${resumoViagem.totalDespesas.toFixed(2)} <span>(Outras despesas: pedágios, gorjetas, etc.)</span></li>
+            <li><strong>Total Dinheiro:</strong> R$ ${resumoViagem.totalDinheiro.toFixed(2)} <span>(Despesas e abastecimentos pagos em dinheiro,cheque e pix)</span></li>
+            <li><strong>Total Cartão:</strong> R$ ${resumoViagem.totalCartao.toFixed(2)} <span>(Despesas e abastecimentos pagos no cartão)</span></li>
+            <li><strong>Total Despesas:</strong> R$ ${resumoViagem.despesaGeral.toFixed(2)} <span>(Abastecimento + Despesas Gerais)</span></li>
+            <li><strong>Total Dias de Viagem:</strong> ${resumoViagem.totalDiasPassados} <span>(Dias totais passados em viagens)</span></li>
+            <li><strong>Total Diárias Recebidas:</strong> R$ ${resumoViagem.totalDiarias.toFixed(2)} <span>(Valor a ser recebido para cobrir custos do motorista)</span></li>
+            <li><strong>Valor Final da Viagem:</strong> R$ ${resumoViagem.valorFinal.toFixed(2)} <span>(Recebimento - Total Despesas incluso as diárias)</span></li>
             `;
             dadosResumoDiv.appendChild(resumoLista);
-            
+
         }
     }
 
     // Verifica e adiciona evento ao botão de finalizar
     if (finalizarBtn) {
-        finalizarBtn.addEventListener('click', function() {
+        finalizarBtn.addEventListener('click', function () {
             gerarPDF()
             localStorage.clear();  // Limpa todos os dados da viagem
             alert("Viagem finalizada com sucesso!");
-            window.location.href = 'index.html';  // Retorna à página inicial
+            window.location.href = 'Contribuição.html';  // Retorna à página inicial
         });
     }
 
@@ -171,7 +174,7 @@ async function gerarPDF() {
 
     let conteudoPasso = [];
     let passoTitulo = "";
-    
+
     // Agora as imagens são adicionadas diretamente após cada conteúdo
     elementos.forEach(el => {
         if (el.tagName === 'H2') {

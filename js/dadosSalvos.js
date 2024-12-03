@@ -51,15 +51,84 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     // Função para editar uma entrada
-    function editarEntrada(passo, index, dados) {
-        const form = document.createElement('form');
-        form.className = 'form-editar';
+function editarEntrada(passo, index, dados) {
+    const form = document.createElement('form');
+    form.className = 'form-editar';
 
-        for (const [chave, valor] of Object.entries(dados)) {
-            const div = document.createElement('div');
-            div.className = 'inputViagem';
+    for (const [chave, valor] of Object.entries(dados)) {
+        const div = document.createElement('div');
+        div.className = 'inputViagem';
 
-            const input = document.createElement('input');
+        let input;
+
+        if (chave === 'kmRodado' || chave === 'mediaConsumo') {
+            const valorExibido = document.createElement('span');
+            valorExibido.textContent = valor;
+            div.appendChild(valorExibido);
+            continue; 
+        }
+
+        if (chave === 'Forma-do-Recebimento') {
+            input = document.createElement('select');
+            input.name = chave;
+            const options = [
+                { value: '', label: 'Forma do Recebimento', disabled: true, selected: true },
+                { value: 'Pix', label: 'PIX' },
+                { value: 'Cheque', label: 'Cheque' },
+                { value: 'Dinheiro', label: 'Dinheiro' },
+            ];
+
+            options.forEach(option => {
+                const optionElement = document.createElement('option');
+                optionElement.value = option.value;
+                optionElement.textContent = option.label;
+                if (option.disabled) optionElement.disabled = true;
+                if (option.selected && !valor) optionElement.selected = true;
+                if (valor === option.value) optionElement.selected = true; // Marca o valor atual
+                input.appendChild(optionElement);
+            });
+        }else if (chave === 'Forma-do-Pagamento') {
+            input = document.createElement('select');
+            input.name = chave;
+            const options = [
+                { value: '', label: 'Forma do Pagamento', disabled: true, selected: true },
+                { value: 'Cartão', label: 'Cartão' },
+                { value: 'Pix', label: 'PIX' },
+                { value: 'Cheque', label: 'Cheque' },
+                { value: 'Dinheiro', label: 'Dinheiro' },
+            ];
+
+            options.forEach(option => {
+                const optionElement = document.createElement('option');
+                optionElement.value = option.value;
+                optionElement.textContent = option.label;
+                if (option.disabled) optionElement.disabled = true;
+                if (option.selected && !valor) optionElement.selected = true;
+                if (valor === option.value) optionElement.selected = true; // Marca o valor atual
+                input.appendChild(optionElement);
+            });
+        }else if (chave === 'Forma-do-Abastecimento') {
+            input = document.createElement('select');
+            input.name = chave;
+            const options = [
+                { value: '', label: 'Forma do Abastecimento', disabled: true, selected: true },
+                { value: 'Cartão', label: 'Cartão' },
+                { value: 'Pix', label: 'PIX' },
+                { value: 'Cheque', label: 'Cheque' },
+                { value: 'Dinheiro', label: 'Dinheiro' },
+            ];
+
+            options.forEach(option => {
+                const optionElement = document.createElement('option');
+                optionElement.value = option.value;
+                optionElement.textContent = option.label;
+                if (option.disabled) optionElement.disabled = true;
+                if (option.selected && !valor) optionElement.selected = true;
+                if (valor === option.value) optionElement.selected = true; // Marca o valor atual
+                input.appendChild(optionElement);
+            });
+        } else {
+            input = document.createElement('input');
             input.name = chave;
             input.placeholder = chave.replace(/-/g, ' '); // Formata o nome como placeholder
             input.value = valor;
@@ -69,7 +138,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 case 'Nome-Completo':
                 case 'Nome-do-Frete':
                 case 'Nome-da-Despesa':
-                case 'Nome-do-Recimento':
+                case 'Nome-do-Recebimento':
                 case 'Nome-do-Posto':
                     input.className = 'nomeInput';
                     break;
@@ -100,99 +169,115 @@ document.addEventListener('DOMContentLoaded', function () {
                     input.className = 'litrosKmInput';
                     break;
 
-                    case 'imagemViagem':
-                        input.type = 'file';
-                        input.accept = 'image/*';
-                        input.id = 'imagemInput';
-                        
-                        const label = document.createElement('label');
-                        label.htmlFor = 'imagemInput';
-                        label.textContent = 'Selecionar ou Tirar Foto';
-                        label.className = 'labelUpload'; // Classe para estilização do botão
+                case 'imagemViagem':
+                    input.type = 'file';
+                    input.accept = 'image/*';
+                    input.id = 'imagemInput';
                     
-                        input.addEventListener('change', (event) => {
-                            const reader = new FileReader();
-                            reader.onload = () => {
-                                dados[chave] = reader.result;
-                            };
-                            reader.readAsDataURL(event.target.files[0]);
-                        });
-                    
-                        div.innerHTML = ''; // Limpa o conteúdo da `div`
-                        div.appendChild(input); // Adiciona o campo de upload
-                        div.appendChild(label); // Adiciona o botão estilizado
-                        break;
+                    const label = document.createElement('label');
+                    label.htmlFor = 'imagemInput';
+                    label.textContent = 'Selecionar ou Tirar Foto';
+                    label.className = 'labelUpload'; // Classe para estilização do botão
+                
+                    input.addEventListener('change', (event) => {
+                        const reader = new FileReader();
+                        reader.onload = () => {
+                            dados[chave] = reader.result;
+                        };
+                        reader.readAsDataURL(event.target.files[0]);
+                    });
+                
+                    div.innerHTML = ''; 
+                    div.appendChild(input);
+                    div.appendChild(label); 
+                    break;
 
                 default:
                     input.className = 'nomeInput';
             }
-
-            div.appendChild(input);
-            form.appendChild(div);
         }
 
-        const salvarBotao = document.createElement('button');
-        salvarBotao.textContent = 'Salvar';
-        salvarBotao.type = 'button';
-        salvarBotao.addEventListener('click', () => salvarEdicao(passo, index, dados));
-        form.appendChild(salvarBotao);
-
-        const cancelarBotao = document.createElement('button');
-        cancelarBotao.textContent = 'Cancelar';
-        cancelarBotao.type = 'button';
-        cancelarBotao.addEventListener('click', () => carregarDados());
-        form.appendChild(cancelarBotao);
-
-        dadosResumoDiv.innerHTML = '';
-        dadosResumoDiv.appendChild(form);
-
-        // Adiciona validação dinâmica aos inputs do formulário de edição
-        form.querySelectorAll('.litrosKmInput').forEach(input => {
-            input.addEventListener('input', (event) => {
-                event.target.value = event.target.value.replace(/[^0-9,]/g, ''); 
-            });
-            input.addEventListener('blur', (event) => {
-                event.target.value = event.target.value.replace(',', '.'); 
-            });
-        });
-
-        form.querySelectorAll('.nomeInput').forEach(input => {
-            input.addEventListener('input', (event) => {
-                event.target.value = event.target.value.replace(/\b\w/g, (c) => c.toUpperCase());
-            });
-        });
-
-        form.querySelectorAll('.placaInput').forEach(input => {
-            input.addEventListener('input', (event) => {
-                let value = event.target.value.toUpperCase().replace(/[^A-Z0-9]/g, "");
-                if (value.length > 3) {
-                    value = value.replace(/(\w{3})(\w{1,4})/, "$1-$2");
-                }
-                event.target.value = value;
-            });
-        });
-
-        form.querySelectorAll('.valorInput').forEach(input => {
-            input.addEventListener('input', (event) => {
-                let value = event.target.value.replace(/\D/g, "");
-                value = (parseFloat(value) / 100).toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
-                event.target.value = value;
-            });
-        });
-
-        form.querySelectorAll('.dataInput').forEach(input => {
-            input.addEventListener('input', (event) => {
-                let value = event.target.value.replace(/\D/g, "");
-                if (value.length > 2 && value.length <= 4) {
-                    value = value.replace(/(\d{2})(\d{1,2})/, "$1/$2");
-                } else if (value.length > 4) {
-                    value = value.replace(/(\d{2})(\d{2})(\d{1,4})/, "$1/$2/$3");
-                }
-                event.target.value = value;
-            });
-        });
+        div.appendChild(input);
+        form.appendChild(div);
     }
 
+    const salvarBotao = document.createElement('button');
+    salvarBotao.textContent = 'Salvar';
+    salvarBotao.type = 'button';
+    salvarBotao.addEventListener('click', () => salvarEdicao(passo, index, dados));
+    form.appendChild(salvarBotao);
+
+    const cancelarBotao = document.createElement('button');
+    cancelarBotao.textContent = 'Cancelar';
+    cancelarBotao.type = 'button';
+    cancelarBotao.addEventListener('click', () => carregarDados());
+    form.appendChild(cancelarBotao);
+
+    dadosResumoDiv.innerHTML = '';
+    dadosResumoDiv.appendChild(form);
+
+    // Adiciona validação dinâmica aos inputs do formulário de edição
+    form.querySelectorAll('.litrosKmInput').forEach(input => {
+        input.addEventListener('input', (event) => {
+            event.target.value = event.target.value.replace(/[^0-9,]/g, ''); 
+        });
+        input.addEventListener('blur', (event) => {
+            event.target.value = event.target.value.replace(',', '.'); 
+        });
+    });
+
+    form.querySelectorAll('.nomeInput').forEach(input => {
+        input.addEventListener('input', (event) => {
+            event.target.value = event.target.value.replace(/\b\w/g, (c) => c.toUpperCase());
+        });
+    });
+
+    form.querySelectorAll('.placaInput').forEach(input => {
+        input.addEventListener('input', (event) => {
+            let value = event.target.value.toUpperCase().replace(/[^A-Z0-9]/g, "");
+            if (value.length > 3) {
+                value = value.replace(/(\w{3})(\w{1,4})/, "$1-$2");
+            }
+            event.target.value = value;
+        });
+    });
+
+    form.querySelectorAll('.valorInput').forEach(input => {
+        input.addEventListener('input', (event) => {
+            let value = event.target.value.replace(/\D/g, "");
+            value = (parseFloat(value) / 100).toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
+            event.target.value = value;
+        });
+    });
+
+    form.querySelectorAll('.dataInput').forEach(input => {
+        input.addEventListener('input', (event) => {
+            let value = event.target.value.replace(/\D/g, "");
+            if (value.length > 2 && value.length <= 4) {
+                value = value.replace(/(\d{2})(\d{1,2})/, "$1/$2");
+            } else if (value.length > 4) {
+                value = value.replace(/(\d{2})(\d{2})(\d{1,4})/, "$1/$2/$3");
+            }
+            event.target.value = value;
+        });
+
+    });
+    atualizarCalculos(form,dados)
+}
+function atualizarCalculos(form, dados) {
+    const kmInicial = parseFloat(form.querySelector('input[name="Km-Inicial-do-Abastecimento"]').value) || 0;
+    const kmFinal = parseFloat(form.querySelector('input[name="Km-Final-do-Abastecimento"]').value) || 0;
+    const litros = parseFloat(form.querySelector('input[name="Litros-do-Abastecimento"]').value) || 0;
+
+    const kmRodado = kmFinal > kmInicial ? kmFinal - kmInicial : 0;
+    const mediaConsumo = litros > 0 ? (kmRodado / litros).toFixed(2) : 0;
+
+    dados['KM-Rodado'] = kmRodado;
+    dados['Média-de-Consumo'] = mediaConsumo;
+
+    form.querySelector('input[name="KM-Rodado"]').value = kmRodado;
+    form.querySelector('input[name="Média-de-Consumo"]').value = mediaConsumo;
+}
 
     // Função para salvar a edição
     function salvarEdicao(passo, index, dados) {

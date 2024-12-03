@@ -58,6 +58,27 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
+    function exibirMensagem(texto, tipo = "sucesso") {
+        const mensagem = document.createElement('div');
+        mensagem.textContent = texto;
+        mensagem.style.position = "fixed";
+        mensagem.style.bottom = "20px";
+        mensagem.style.right = "20px";
+        mensagem.style.backgroundColor = tipo === "erro" ? "#f44336" : "#4CAF50"; // Vermelho para erros, verde para sucesso
+        mensagem.style.color = "white";
+        mensagem.style.padding = "10px";
+        mensagem.style.borderRadius = "5px";
+        mensagem.style.boxShadow = "0 4px 6px rgba(0,0,0,0.1)";
+        mensagem.style.zIndex = "1000";
+        document.body.appendChild(mensagem);
+    
+        // Remove a mensagem após 3 segundos
+        setTimeout(() => {
+            document.body.removeChild(mensagem);
+        }, 3000);
+    }
+    
+
     function validarCampos(passoAtual) {
         const inputs = document.querySelectorAll(`[data-passo="${passoAtual}"] input`);
 
@@ -78,15 +99,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         // Se não todos os campos estão preenchidos, mas existem dados salvos no localStorage, preencha os inputs
         if (!todosPreenchidos) {
-            const dadosSalvos = JSON.parse(localStorage.getItem(`dadosPasso${passoAtual}`)) || [];
-            if (dadosSalvos.length > 0) {
-                dadosSalvos[0].forEach((item) => {
-                    const input = document.querySelector(`[name="${item}"]`);
-                    if (input) {
-                        input.value = item.valor; // Preenche o input com os dados salvos
-                    }
-                });
-            }
+            exibirMensagem("Por favor, preencha todos os campos obrigatórios.", "erro");
         }
 
         return todosPreenchidos; // Retorna se todos os campos estão preenchidos
@@ -135,7 +148,6 @@ document.addEventListener('DOMContentLoaded', function () {
     function salvarDados(passo) {
 
         if (!validarCampos(passo)) {
-            alert("Por favor, preencha todos os campos da forma correta.");
             return;
         }
 
@@ -151,22 +163,9 @@ document.addEventListener('DOMContentLoaded', function () {
             listaDados = [dados];
         }
 
-        if (passo === "3") {
-            const KmInicial = parseFloat(dados["Km-Inicial-do-Abastecimento"]) || 0;
-            const KmFinal = parseFloat(dados["Km-Final-do-Abastecimento"]) || 0;
-            const quantidadeCombustivel = parseFloat(dados["Litros-do-Abastecimento"]) || 0;
-
-            const kmRodado = KmFinal - KmInicial;
-            let mediaConsumo = 0;
-            if (quantidadeCombustivel > 0) {
-                mediaConsumo = kmRodado / quantidadeCombustivel;
-            }
-
-            dados.kmRodado = kmRodado;
-            dados.mediaConsumo = mediaConsumo.toFixed(2);
-        }
 
         localStorage.setItem(`dadosPasso${passo}`, JSON.stringify(listaDados));
+        exibirMensagem("Dados salvos com sucesso!", "sucesso");
     }
 
     function limparInputs(passo) {
@@ -183,14 +182,12 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     iniciarViagemBtn.addEventListener('click', function () {
-        if (validarCampos("1")) { // Você pode querer deixar isso como "1" para validar o passo inicial
-            console.log("Passo 1 validado com sucesso.");
+        if (validarCampos("1")) {
             salvarDados("1");
             localStorage.setItem('viagemIniciada', true);
             mostrarPasso("2");
             passoAtual = "2";
-        } else {
-            alert("Por favor, preencha todos os campos obrigatórios no passo 1.");
+            exibirMensagem("Viagem iniciada com sucesso!", "sucesso");
         }
     });
 
@@ -204,8 +201,8 @@ document.addEventListener('DOMContentLoaded', function () {
             const dataFinal = new Date(datafimInput.value.split('/').reverse().join('-') || "");
     
             if (dataInicial > dataFinal) {
-                alert("A data inicial não pode ser maior que a data final.")
-                return
+                exibirMensagem("A data inicial não pode ser maior que a data final.", "erro");
+                return;
             }
         }
     
@@ -241,9 +238,8 @@ document.addEventListener('DOMContentLoaded', function () {
             // Atualiza a exibição dos dados imediatamente após adicionar um novo item
             mostrarPasso(passoAtual); // Isso irá recarregar o estado atual dos dados
     
-        } else {
-            alert("Por favor, preencha todos os campos obrigatórios antes de adicionar.");
-        }
+        } 
+        exibirMensagem("Dados Adicionados com sucesso!", "sucesso");
     });
     
     // Função para salvar dados incluindo imagem
@@ -261,15 +257,15 @@ document.addEventListener('DOMContentLoaded', function () {
             const KmInicial = parseFloat(dados["Km-Inicial-do-Abastecimento"]) || 0;
             const KmFinal = parseFloat(dados["Km-Final-do-Abastecimento"]) || 0;
             const quantidadeCombustivel = parseFloat(dados["Litros-do-Abastecimento"]) || 0;
-    
+
             const kmRodado = KmFinal - KmInicial;
             let mediaConsumo = 0;
             if (quantidadeCombustivel > 0) {
                 mediaConsumo = kmRodado / quantidadeCombustivel;
             }
-    
-            dados.kmRodado = kmRodado;
-            dados.mediaConsumo = mediaConsumo.toFixed(2);
+
+            dados["KM-Rodado"] = kmRodado;
+            dados["Média-de-Consumo"] = mediaConsumo.toFixed(2);
         }
     
         localStorage.setItem(`dadosPasso${passo}`, JSON.stringify(listaDados));
@@ -308,6 +304,18 @@ document.addEventListener('DOMContentLoaded', function () {
             return total
         }, 0);
 
+        const totalDinheiro = [
+            ...dadosPasso3.filter(item => item["Forma-do-Abastecimento"] !== "Cartão"),
+            ...dadosPasso5.filter(item => item["Forma-do-Pagamento"] !== "Cartão")
+        ].reduce((total, item) => total + limparFormatoMoeda(item["Valor-do-Abastecimento"] || item["Valor-da-Despesa"]), 0);
+        
+        const totalCartao = [
+            ...dadosPasso3.filter(item => item["Forma-do-Abastecimento"] === "Cartão"),
+            ...dadosPasso5.filter(item => item["Forma-do-Pagamento"] === "Cartão")
+        ].reduce((total, item) => total + limparFormatoMoeda(item["Valor-do-Abastecimento"] || item["Valor-da-Despesa"]), 0);
+    
+        
+
         // Cálculo total de dias passados em viagens
         let totalDiasPassados = 0;
         dadosPasso2.forEach(item => {
@@ -332,14 +340,17 @@ document.addEventListener('DOMContentLoaded', function () {
             totalRecebimento,
             totalAbastecimento,
             totalDespesas,
+            totalDinheiro,
+            totalCartao,
             totalDiarias,
             valorFinal,
             despesaGeral,
-            totalDiasPassados // Adicionando total de dias ao resumo
+            totalDiasPassados 
         };
 
         // Salvando os dados no localStorage e redirecionando
         localStorage.setItem('resumoViagem', JSON.stringify(resumoViagem))
+        exibirMensagem("Resumo finalizado com sucesso!", "sucesso");
         window.location.href = 'resumo.html'
     });
 })

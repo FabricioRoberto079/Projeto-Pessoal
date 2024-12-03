@@ -78,7 +78,7 @@ body {
 }
 
 /* Botão de cópia */
-.copy-button {
+button {
     background-color: var(--azul-claro);
     color: var(--branco);
     border: none;
