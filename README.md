@@ -7,7 +7,7 @@ O **Driver-Log** é uma ferramenta prática e eficiente para motoristas que dese
 
 ### 🌐 **Acesse o Driver-Log Online**  
 O site do **Driver-Log** está hospedado no GitHub Pages. Acesse agora para testar as funcionalidades:  
-[**Driver-Log no GitHub Pages**]()  
+[**Driver-Log no GitHub Pages**](https://fabricioroberto079.github.io/Driver-Log/)  
 
 ---
 
@@ -52,7 +52,7 @@ Quer ajudar a melhorar o Driver-Log? Siga os passos:
 ### 📩 **Contato**  
 Para dúvidas, sugestões ou parcerias, entre em contato:  
 - **E-mail**: [fabricioroberto360@gmail.com]  
-- **LinkedIn**: [(https://www.linkedin.com/in/fabricio-roberto-a1144727a/)]  
+- **LinkedIn**: [https://www.linkedin.com/in/fabricio-roberto-a1144727a/]  
 
 Obrigado por testar o **Driver-Log** e fazer parte da nossa jornada! 🚀  
 
